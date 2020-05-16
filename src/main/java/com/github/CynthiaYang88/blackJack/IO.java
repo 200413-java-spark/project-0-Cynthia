@@ -3,10 +3,17 @@
  */
 package com.github.CynthiaYang88.blackJack;
 
+import java.sql.* ;
+//import com.microsoft.sqlserver.jdbc.*;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+
+
+
+
+
 
 /**
  * @author Cindi
@@ -21,14 +28,12 @@ public class IO {
 
 	public void readFromCSV(String fileName) {
 		FileReader inputStream = null;
-		System.out.println("one" + fileName);
 
 		try {
 			inputStream = new FileReader(fileName); // input file
 
 			int c; // ?
 			while ((c = inputStream.read()) != -1) { // read and process one character
-				System.out.println("c" + (char) c);
 
 				if ((char) c == ',') {
 					afterComma = counter;
@@ -76,6 +81,60 @@ public class IO {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * Method to write to server
+	 * @param b bankroll balance
+	 */
+	/*=====================================================================
+	File: 	 ConnectDataSource.java
+	Summary: This Microsoft JDBC Driver for SQL Server sample application
+	         demonstrates how to connect to a SQL Server database by 
+		     using a data source object.
+	---------------------------------------------------------------------
+	This file is part of the Microsoft JDBC Driver for SQL Server Code Samples.
+	Copyright (C) Microsoft Corporation.  All rights reserved.
+	 
+	This source code is intended only as a supplement to Microsoft
+	Development Tools and/or on-line documentation.  See these other
+	materials for detailed information regarding Microsoft code samples.
+	 
+	THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF
+	ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+	THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+	PARTICULAR PURPOSE.
+	=====================================================================*/
+	public void writeToServer(double b) {
+		// Want to output to server:
+		// String this.name
+		// double b
+		System.out.println("bb" + b);
+		
+		
+		/*// Create datasource.
+        SQLServerDataSource ds = new SQLServerDataSource();
+        ds.setUser("DESKTOP-IE524RB/music");
+        //ds.setPassword("<password>");
+        ds.setServerName("DESKTOP-IE524RB");
+        ds.setPortNumber(Integer.parseInt("5432"));
+        ds.setDatabaseName("userNameDatabase"); */
+		// Create a variable for the connection string.
+        
+	    // Create a variable for the connection string.
+        //String connectionUrl = "jdbc:postgresql://localhost:5432/userNameDatabase;user=opsdb;password=opsdb";
+		// "jdbc:postgresql://localhost:5432/userNameDatabase", "opsdb","opsdb" 
+		
+        try ( Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/opsdb","postgres","123"); Statement stmt = con.createStatement();) {
+            String SQL = "insert into userNameDatabase(Username, Bankroll) values(this.name, b)";
+            stmt.execute(SQL);
+            
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("databse yayy");
 	}
 
 }
