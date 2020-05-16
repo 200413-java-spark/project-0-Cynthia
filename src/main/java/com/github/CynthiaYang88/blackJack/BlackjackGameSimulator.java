@@ -1,17 +1,20 @@
-package Blackjack;
+package com.github.CynthiaYang88.blackJack;
 
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*; //Scanner;
+import java.io.IOException;
+/*import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections; 
 import java.util.Arrays;
-import java.util.stream.*;
+import java.util.stream.*; */
+
 
 /**
  * This class runs the BlackJack simulation by using the static method main.
  * @author Cindi
  * @version 1.0
  */
+@SuppressWarnings("unused")
 public class BlackjackGameSimulator
 {
     /**
@@ -21,9 +24,12 @@ public class BlackjackGameSimulator
      * playBJ(), and finally asks if the player wants to continue playing BlackJack.
      * @author Cindi
      * @version 1.0
+     * @throws IOException 
      */
-    public static void main( String[] args )
-    {
+    @SuppressWarnings("unused")
+	public static void main( String[] args ) {
+    	
+    	System.out.println("yipee");
         boolean playerContinue = true;
         double betAmount = 0;
         String name = "";
@@ -32,20 +38,27 @@ public class BlackjackGameSimulator
         double winLossAmnt = 0;
         ArrayList< ArrayList< Double > > outcome = new ArrayList< ArrayList< Double > >( );
         double updateAmount = 0;
+        String input = "C:/Users/music/Documents/workspace-spring-tool-suite-4-4.6.1.RELEASE/blackJack/input.csv";
 
+        
+        System.out.println("two" + input);
+        IO inputOutput = new IO();
+        inputOutput.readFromCSV( input );
         // Display welcome message
-        Scanner inputName = new Scanner(System.in);
+        /*Scanner inputName = new Scanner(System.in);
         System.out.println(" ");
         System.out.print("Enter name: ");
         name = inputName.next();
-        inputName.close();
+        inputName.close();*/
+        name = inputOutput.getName();//+
         System.out.println( "\n Hello " + name + ", Welcome to Blackjack's World. \n" );
 
         // Enter bankroll 
-        Scanner inputBank = new Scanner(System.in);
+        /*Scanner inputBank = new Scanner(System.in);
         System.out.print("Enter bankroll amount: $");
         bank = inputBank.nextInt();
-        inputBank.close();  
+        inputBank.close();  */
+        bank = inputOutput.getBank();//+
 
         // Display Blackjack game is starting
         System.out.println( "\n" + name + ", your Blackjack game has started.\n" );  
@@ -126,7 +139,7 @@ public class BlackjackGameSimulator
                          * amount, but wins the insurance bet which pays 2 to 1. */
                         if( outcome.get(j).get(1).intValue() > 0 && outcome.get(j).get(2).intValue() == 1 )
                         {   // pays +0x  (no change in player bankroll balance)
-                            updateAmount = 0*betAmount; 
+                            updateAmount = 0;//*betAmount; 
                         }
                         /* If Dealer has face up Ace, if player selected insurance of half 
                          * the original bet amount, but dealer did not get BlackJack, and 
@@ -142,7 +155,7 @@ public class BlackjackGameSimulator
                          * insurance involved in computing earnings. Dealer won. */
                         else
                         {   // pays -1.0x (player loses money)
-                            updateAmount = (-1)*betAmount; 
+                            updateAmount = -betAmount;//(-1)*betAmount; 
                         }
                         bank = currentBank.updateBalance(  bank,  updateAmount );
                         break;
@@ -654,7 +667,7 @@ public class BlackjackGameSimulator
         // hand contains "A's"
         else
         {   // total value of cards in hand excluding Ace, Ace is initialized to 0
-            sum = IntStream.of(cards).sum(); 
+            sum = 0;//--IntStream.of(cards).sum(); 
             // for all aces found
             for (int i = 0; i < (acePos.size()+1); i++ ) 
             {   // Sum of Ace possibilities
