@@ -30,7 +30,6 @@ public class BlackjackGameSimulator {
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		
-		
 		boolean playerContinue = true;
 		double betAmount = 0;
 		String name = "";
@@ -41,7 +40,7 @@ public class BlackjackGameSimulator {
 		double updateAmount = 0;
 		String input = "C:/Users/music/Documents/workspace-spring-tool-suite-4-4.6.1.RELEASE/blackJack/input.csv";
 
-		System.out.println("two" + input);
+		//System.out.println("two" + input);
 		IO inputOutput = new IO();
 		inputOutput.readFromCSV(input);
 		// Display welcome message
@@ -69,8 +68,7 @@ public class BlackjackGameSimulator {
 				System.out.print("\n Bet amount cannot be greater than bank: $");
 				betAmount = in.nextInt();
 			}
-			//--  ------- in.close();
-
+			
 			// Run the BlackJack simulator, and return the game results to outcome
 			/* 0) Push, 1) Player Natural BlackJack, 2) Player wins, 3) Dealer wins */
 			outcome = playBJ(name, betAmount, in);
@@ -114,7 +112,7 @@ public class BlackjackGameSimulator {
 				// Dealer Wins
 				case 3: {
 					System.out.println(" ");
-					System.out.print("Sorry " + name + "_" + j + ", Dealer Won.");
+					System.out.print("Try Again, Dealer Won");// System.out.print("Sorry " + name + "_" + j + ", Dealer Won.");
 					/*
 					 * Accounts for insurance against Dealer BlackJack when a Dealer initially has a
 					 * face-up Ace. If Dealer has face up Ace, if player selected insurance of half
@@ -613,18 +611,6 @@ public class BlackjackGameSimulator {
 			sum = 0;// --IntStream.of(cards).sum();
 			// for all aces found
 			for (int i = 0; i < (acePos.size() + 1); i++) { // Sum of Ace possibilities
-				/*
-				 * numA = 2 11, 11 = (numA-0)*11 + (numA - (numA-0))*1 =
-				 * sum_A_possibilities.get(i) 11, 1 = (numA-1)*11 + (numA - (numA-1))*1 =
-				 * sum_A_possibilities.get(i) 1, 1 = (numA-2)*11 + (numA - (numA-2))*1 =
-				 * sum_A_possibilities.get(i)
-				 *
-				 * numA = 3 11, 11, 11 = (numA-0)*11 + (numA - (numA-0))*1 =
-				 * sum_A_possibilities.get(i) 11, 11, 1 = (numA-1)*11 + (numA - (numA-1))*1 =
-				 * sum_A_possibilities.get(i) 11, 1, 1 = (numA-2)*11 + (numA - (numA-2))*1 =
-				 * sum_A_possibilities.get(i) 1, 1, 1 = (numA-3)*11 + (numA - (numA-3))*1 =
-				 * sum_A_possibilities.get(i)
-				 */
 				sum_A_possibilities.add((acePos.size() - i) * 11 + (acePos.size() - (acePos.size() - i)) * 1);
 			}
 

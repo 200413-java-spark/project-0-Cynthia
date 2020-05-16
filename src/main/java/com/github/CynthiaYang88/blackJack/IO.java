@@ -109,7 +109,7 @@ public class IO {
 		// Want to output to server:
 		// String this.name
 		// double b
-		System.out.println("bb" + b);
+		//System.out.println("bb" + b);
 		
 		
 		/*// Create datasource.
@@ -125,16 +125,21 @@ public class IO {
         //String connectionUrl = "jdbc:postgresql://localhost:5432/userNameDatabase;user=opsdb;password=opsdb";
 		// "jdbc:postgresql://localhost:5432/userNameDatabase", "opsdb","opsdb" 
 		
-        try ( Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/opsdb","postgres","123"); Statement stmt = con.createStatement();) {
-            String SQL = "insert into userNameDatabase(Username, Bankroll) values(this.name, b)";
-            stmt.execute(SQL);
+        String SQL = "insert into user_name values(?, ?)";//"insert into user_name(UserName, bankRoll) values(this.name, b)";
+        
+        try ( Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/blackJack","postgres","lalala086"); PreparedStatement stmt = con.prepareStatement(SQL);) {
+            //String SQL = "insert into user_name values(?, ?)";//"insert into user_name(UserName, bankRoll) values(this.name, b)";
+            stmt.setString(1, this.name);
+            stmt.setDouble(2, b);
+            stmt.addBatch();
+            stmt.executeBatch(); // SQL
             
         }
         // Handle any errors that may have occurred.
         catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("databse yayy");
+        //System.out.println("databse yayy");
 	}
 
 }
